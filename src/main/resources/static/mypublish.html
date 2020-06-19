@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>我已发布的作业</title>
+    <script src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript">
+        function load() {
+            var load_id = window.opener.document.getElementById("load_id").value;
+
+            $.ajax({
+                url: "/homework/mypublish",
+                type: "POST",
+                data: {
+                    load_id: load_id
+                },
+                cache: false,
+                dataType: "json",
+                success: function (data) {
+                    var code1=data.code;
+                    var msg=data.msg;
+                    var data1=data.neirong;
+
+                    var tableData = "<tr><tr align=\"center\" bgcolor=\"#7fffd4\" height=\"50\"><td>作业号</td><td>课程号</td><td>课程名</td><td>作业要求</td><td>作业截止时间</td></tr>"
+                    for (var i = 0; i < data1.length; i++) {
+                        tableData += "<tr align=\"center\" bgcolor=\"white\" height=\"30\"><td>" + data1[i].homework_id + "</td>" + "<td>" + data1[i].class_id + "</td>" + "<td>" +data1[i].class_name+"</td>"+"<td>"+ data1[i].homework_rm+"</td>"+"<td>"+data1[i].homework_et+"</td></tr>"
+                    }
+                    $("#tbody1").html(tableData)
+
+                },
+                error: function (err) {
+                    alert("error");
+                }
+            });
+
+        }
+    </script>
+
+</head>
+<body onload="load();">
+<br>
+<table align="center" width="960" border="1" bgcolor="black" cellpadding="1" cellspacing="1">
+    <tbody id="tbody1">
+    </tbody>
+</table>
+<br>
+</body>
+</html>

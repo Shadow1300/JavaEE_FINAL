@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册页</title>
+
+    <script src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript">
+        function beforeSure() {
+            var register_id =document.getElementById("register_id").value;
+            var register_pw =document.getElementById("register_pw").value;
+            var register_type=document.getElementById("register_type").value;
+            var register_name=document.getElementById("register_name").value;
+
+            $.ajax({
+                url: "/register/a",
+                type: "POST",
+                data: {
+                    register_id: register_id,
+                    register_pw: register_pw,
+                    register_type: register_type,
+                    register_name: register_name
+                },
+                cache: false,
+                dataType: "json",
+                success: function (data) {
+                    var msg=data.code;
+                    if(msg==0){
+                        alert("注册失败！");
+                    }
+                    else {
+                        alert("注册成功！");
+                        window.location.href = "index.html";
+                    }
+
+                    //window.open("index.jsp");
+                },
+                error: function (err) {
+                    alert("error");
+                }
+            });
+
+        }
+
+        function register() {
+            window.open("index.html");
+        }
+    </script>
+
+</head>
+<body>
+<form id="form" margin="100px" >
+    学工号:    <input type="text" id="register_id" name="register_id" value="" align="center"><br>
+    姓名:    <input type="text" id="register_name" name="register_name" value="" align="center"><br>
+    密码:    <input type="text" id="register_pw" name="register_pw" align="center"><br>
+    身份（学生/老师）:    <input type="text" id="register_type" name="register_type" align="center"><br>
+    <br>
+    <input type="button" id="submit" value="确定" onclick="beforeSure()" align="center">              <input type="reset" value="重置">              <input type="button" value="取消" onclick="register()">
+    <p align="center"></p>
+</form>
+
+
+</body>
+</html>

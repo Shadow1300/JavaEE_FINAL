@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>提交作业</title>
+    <script src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript">
+        function load() {
+            var load_id=window.opener.document.getElementById("load_id").value;
+            document.getElementById("student_id").value=load_id;
+        }
+    </script>
+
+    <script type="text/javascript">
+        function beforeSure() {
+            var homework_id=document.getElementById("homework_id").value;
+            var class_id=document.getElementById("class_id").value;
+            var homework_title=document.getElementById("homework_title").value;
+            var homework_content=document.getElementById("homework_content").value;
+            var student_id=window.opener.document.getElementById("load_id").value;
+
+            $.ajax({
+                url: "/homework/submit",
+                type: "POST",
+                data: {
+                    student_id: student_id,
+                    homework_id: homework_id,
+                    class_id: class_id,
+                    homework_title: homework_title,
+                    homework_content: homework_content
+                },
+                cache: false,
+                dataType: "json",
+                success: function (data) {
+                    var code1=data.code;
+                    var msg=data.msg;
+                    if(code1==0){
+                        if(msg=="no"){
+                            alert("你没有这个课程");
+                        }
+                        else {
+                            alert("作业提交失败");
+                        }
+                    }
+                    else {
+                        alert("作业提交成功");
+                        //window.open("studentmain.html");
+                    }
+
+                },
+                error: function (err) {
+                    alert("error");
+                }
+            });
+
+        }
+    </script>
+    <style>
+        .div{font-size:19px}
+        /* css注释：设置使用对象选择器名为“.div”的字体大小为14px */
+        .span{font-size:19px}
+    </style>
+
+
+</head>
+<body onload="load()">
+<form id="form" method="post">
+    <h2>提交作业</h2>
+    学生ID:<input type="text" id="student_id" value=""><br>
+    课程ID：<input type="text" id="class_id"><br>
+    作业ID:<input type="text" id="homework_id"><br>
+    作业标题:<input type="text" id="homework_title"><br>
+    作业内容:<input type="text" id="homework_content" style="width:170px;height:200px"><br>
+    <br>
+    <input type="button" id="submit" value="提交" onclick="beforeSure()"><input type="reset" value="重置">
+</form>
+</body>
+</html>

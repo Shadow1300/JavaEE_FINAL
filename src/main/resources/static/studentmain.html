@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>学生主页</title>
+    <script src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript">
+        function load() {
+            var id =window.opener.document.getElementById("load_id").value;
+            document.getElementById("load_id").value = id;
+        }
+
+    </script>
+</head>
+<body onload="load();">
+同学欢迎你:    <input type="text" id="load_id" name="load_id" value="" align="center"><br>
+<table border="1">
+    <tr>
+        <td>请选择操作项</td>
+    </tr>
+    <tr>
+        <td><a href="/lookhomework.html" target="_blank">查看作业要求</a></td>
+    </tr>
+    <tr>
+        <td><a href="/submithomework.html" target="_blank">提交作业</a></td>
+    </tr>
+    <tr>
+        <td><a href="/joinclass.html" target="_blank">加入班级</a></td>
+    </tr>
+    <tr>
+        <td><a href="/lookclass1.html" target="_blank">查看班级</a></td>
+    </tr>
+</table>
+</body>
+</html>

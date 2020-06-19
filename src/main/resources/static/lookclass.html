@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>查看我的班级</title>
+
+    <script src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript">
+        function load() {
+            var teacher_id=window.opener.document.getElementById("load_id").value;
+            document.getElementById("num").value = teacher_id;
+
+            var id=document.getElementById("num").value;
+            $.ajax({
+                url: "/class/look",
+                type: "POST",
+                data: {
+                    teacher_id: id
+                },
+                cache: false,
+                dataType: "json",
+                success: function (data) {
+                    var code1=data.code;
+                    var msg=data.msg;
+                    var data1=data.neirong;
+
+                    var tableData = "<tr><tr align=\"center\" bgcolor=\"#7fffd4\" height=\"50\"><td>课程号</td><td>课程名</td><td>教师号</td><td>邀请码</td></tr>"
+                    for (var i = 0; i < data1.length; i++) {
+                        tableData += "<tr align=\"center\" bgcolor=\"white\" height=\"30\"><td>" + data1[i].class_id + "</td>" + "<td>" + data1[i].class_name + "</td>" + "<td>" + data1[i].teacher_id+"</td>"+"<td>"+data1[i].check_num+"</td></tr>"
+                    }
+                    $("#tbody1").html(tableData)
+                },
+                error: function (err) {
+                    alert("error");
+                }
+            });
+
+
+        }
+    </script>
+
+</head>
+<body onload="load();"/>
+<body>
+记录数量：     <input type="text" id="num" name="num" value="" align="center"><br>
+<br>
+
+<p align="center"></p>
+
+
+<br>
+<table align="center" width="960" border="1" bgcolor="black" cellpadding="1" cellspacing="1">
+    <tbody id="tbody1">
+    </tbody>
+</table>
+<br>
+</body>
+</html>

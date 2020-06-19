@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>批改作业</title>
+
+    <script src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript">
+        function load() {
+            var load_id = window.opener.document.getElementById("load_id").value;
+
+        }
+    </script>
+
+    <script src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript">
+        function beforeSure() {
+            var homework_id =document.getElementById("homework_id").value;
+            var class_id =document.getElementById("class_id").value;
+            var student_id =document.getElementById("student_id").value;
+            var teacher_comment =document.getElementById("teacher_comment").value;
+            var grade =document.getElementById("grade").value;
+            var teacher_id=window.opener.document.getElementById("load_id").value;
+            $.ajax({
+                url: "/homework/check",
+                type: "POST",
+                data: {
+                    homework_id: homework_id,
+                    class_id: class_id,
+                    student_id: student_id,
+                    teacher_id: teacher_id,
+                    teacher_comment: teacher_comment,
+                    grade: grade
+                },
+                cache: false,
+                dataType: "json",
+                success: function (data) {
+                    var code1=data.code;
+                    var msg=data.msg;
+                    if(code1==0){
+                        if(msg=="无此课"){
+                            alert("无此课");
+                        }
+                        else if(msg=="无此作业"){
+                            alert("无此作业");
+                        }
+                        else {
+                            alert("未提交此作业");
+                        }
+
+                    }
+                    else {
+                        alert("批改成功!");
+                    }
+
+
+                    //window.open("index.jsp");
+                },
+                error: function (err) {
+                    alert("error");
+                }
+            });
+
+        }
+
+    </script>
+</head>
+<body onload="load();"/>
+<body>
+作业id：     <input type="text" id="homework_id" name="homework_id" value="" align="center"><br>
+学生id：     <input type="text" id="student_id" name="student_id" value="" align="center"><br>
+课程id:    <input type="text" id="class_id" name="class_id" value="" align="center"><br>
+<br>
+评语:    <input type="text" id="teacher_comment" name="teacher_comment" value="" align="center" style="width:170px;height:100px"><br>
+分数:    <input type="text" id="grade" name="grade" value="" align="center"><br>
+
+<br>
+<input type="button" id="submit" value="确定" onclick="beforeSure()" align="center">              <input type="reset" value="重置">
+<p align="center"></p>
+</body>
+</html>

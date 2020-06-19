@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<head>
+    <meta charset="UTF-8">
+    <title>发布作业</title>
+    <script src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript">
+        function load() {
+            var load_id=window.opener.document.getElementById("load_id").value;
+        }
+    </script>
+
+    <script type="text/javascript">
+        function beforeSure() {
+            var homework_id=document.getElementById("homework_id").value;
+            var class_id=document.getElementById("class_id").value;
+            var homework_requirement=document.getElementById("homework_requirement").value;
+            var homework_endtime=document.getElementById("homework_endtime").value;
+            var load_id=window.opener.document.getElementById("load_id").value;
+
+            $.ajax({
+                url: "/homework/publish",
+                type: "POST",
+                data: {
+                    homework_id: homework_id,
+                    class_id: class_id,
+                    homework_requirement: homework_requirement,
+                    homework_endtime: homework_endtime,
+                    load_id: load_id
+                },
+                cache: false,
+                dataType: "json",
+                success: function (data) {
+                    var code1=data.code;
+                    var msg=data.msg;
+                    if(code1==0){
+                        if(msg=="你没有这个课程"){
+                            alert("你没有这个课程");
+                        }
+                        else {
+                            alert("发布失败");
+                        }
+                    }
+                    else {
+                        alert("作业发布成功");
+                        window.open("teachermain.html");
+
+                    }
+
+                },
+                error: function (err) {
+                    alert("error");
+                }
+            });
+
+        }
+    </script>
+
+</head>
+<body onload="load();"/>
+<body>
+<form action="/addHomework2" id="form">
+    <h2>发布作业</h2>
+    作业ID:<input type="text" id="homework_id"><br>
+    课程ID:<input type="text" id="class_id"><br>
+    作业要求:<input type="text" id="homework_requirement"><br>
+    作业截止日期:<input type="datetime-local" id="homework_endtime"><br>
+
+    <br>
+    <input type="button" id="submit" value="确定" onclick="beforeSure()" align="center">         <input type="reset" value="重置">
+    <p align="center"></p>
+</form>
+</body>
+</html>

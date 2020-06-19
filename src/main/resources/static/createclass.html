@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>创建班级</title>
+    <script src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript">
+        function load() {
+            var load_id = window.opener.document.getElementById("load_id").value;
+            document.getElementById("load_id").value = load_id;
+        }
+    </script>
+
+    <script src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript">
+        function beforeSure() {
+            var class_name =document.getElementById("class_name").value;
+            var class_id =document.getElementById("class_id").value;
+            var teacher_id =window.opener.document.getElementById("load_id").value;
+
+            $.ajax({
+                url: "/class/create",
+                type: "POST",
+                data: {
+                    class_id: class_id,
+                    class_name: class_name,
+                    teacher_id: teacher_id
+                },
+                cache: false,
+                dataType: "json",
+                success: function (data) {
+                    var code1=data.code;
+                    var msg=data.msg;
+                    if(code1==0){
+                        alert("创建失败！");
+                    }
+                    else {
+                        alert("创建成功！邀请码为："+msg);
+                        window.location.href = "teachermain.html";
+                    }
+
+
+                    //window.open("index.jsp");
+                },
+                error: function (err) {
+                    alert("error");
+                }
+            });
+
+        }
+
+        function back() {
+            window.location.href = "teachermain.html";
+        }
+    </script>
+</head>
+<body onload="load();"/>
+<body>
+老师ID：     <input type="text" id="load_id" name="load_id" value="" align="center"><br>
+课程ID：     <input type="text" id="class_id" name="class_id" value="" align="center"><br>
+课程名称:    <input type="text" id="class_name" name="class_name" value="" align="center"><br>
+
+<br>
+<input type="button" id="submit" value="确定" onclick="beforeSure()" align="center">              <input type="reset" value="重置">              <input type="button" value="取消" onclick="back()">
+<p align="center"></p>
+</body>
+</html>

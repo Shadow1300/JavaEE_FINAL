@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>加入班级</title>
+
+    <script src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript">
+        function load() {
+            var load_id = window.opener.document.getElementById("load_id").value;
+            document.getElementById("load_id").value = load_id;
+
+        }
+    </script>
+
+    <script src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript">
+        function beforeSure() {
+            var load_id = window.opener.document.getElementById("load_id").value;
+
+            $.ajax({
+                url: "/class/join",
+                type: "POST",
+                data: {
+                    student_id: load_id,
+                    teacher_id: document.getElementById("teacher_id").value,
+                    class_id: document.getElementById("class_id").value,
+                    check_num: document.getElementById("check_id").value,
+                },
+                cache: false,
+                dataType: "json",
+                success: function (data) {
+                    var code1=data.code;
+                    var msg=data.msg;
+                    if(code1==0){
+                        if(msg=="验证码错误"){
+                            alert("验证码错误");
+                        }
+                        else if(msg=="false"){
+                            alert("错1");
+                        }
+                        else if(msg=="id不匹配"){
+                            alert("错2");
+                        }
+                        else{
+                            alert("错3");
+                        }
+
+                    }
+                    else {
+                        alert("加入成功！");
+                        window.location.href = "studentmain.html";
+                    }
+
+                    //window.open("index.jsp");
+                },
+                error: function (err) {
+                    alert("error");
+                }
+            });
+
+        }
+        function back() {
+            window.location.href = "studentmain.html";
+        }
+    </script>
+
+</head>
+<body onload="load();">
+学生id：   <input type="text" id="load_id" name="load_id" value="" align="center"><br>
+班级id:    <input type="text" id="class_id" name="class_id" value="" align="center"><br>
+老师id:    <input type="text" id="teacher_id" name="teacher_id" align="center"><br>
+邀请码： <input type="text" id="check_id" name="check_id" align="center"><br>
+
+<br>
+<input type="button" id="submit" value="确定" onclick="beforeSure()" align="center">              <input type="reset" value="重置">              <input type="button" value="取消" onclick="back()">
+<p align="center"></p>
+</body>
+</html>

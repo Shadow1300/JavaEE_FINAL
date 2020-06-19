@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>查看学生提交作业情况</title>
+    <script src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript">
+        function load() {
+            var load_id = window.opener.document.getElementById("load_id").value;
+            $.ajax({
+                url: "/homework/look1",
+                type: "POST",
+                data: {
+                    load_id: load_id
+                },
+                cache: false,
+                dataType: "json",
+                success: function (data) {
+                    var code1=data.code;
+                    var msg=data.msg;
+                    var data1=data.neirong;
+                    alert("error");
+                    document.getElementById("num").value=data1;
+                    var tableData = "<tr><tr align=\"center\" bgcolor=\"#7fffd4\" height=\"50\"><td>作业号</td><td>课程号</td><td>学号</td><td>作业标题</td><td>作业内容</td><td>提交时间</td><td>老师评语</td><td>分数</td></tr>"
+                    for (var i = 0; i < data1.length; i++) {
+                        tableData += "<tr align=\"center\" bgcolor=\"white\" height=\"30\"><td>" + data1[i].homework_id + "</td>" + "<td>" + data1[i].class_id + "</td>" + "<td>" +data1[i].student_id+"</td>"+"<td>"+data1[i].homework_title+"</td>"+"<td>"+data1[i].submit_time+"</td>"+"<td>"+data1[i].homework_content+"</td>"+"<td>"+ data1[i].teacher_comment+"</td>"+"<td>"+data1[i].grade+"</td></tr>"
+                    }
+                    $("#tbody1").html(tableData)
+
+                },
+                error: function (err) {
+                    alert("error");
+                }
+            });
+
+        }
+    </script>
+
+</head>
+<body onload="load();">
+<br>
+记录数量：     <input type="text" id="num" name="num" value="" align="center"><br>
+<br>
+
+<p align="center"></p>
+
+
+<br>
+<table align="center" width="960" border="1" bgcolor="black" cellpadding="1" cellspacing="1">
+    <tbody id="tbody1">
+    </tbody>
+</table>
+<br>
+</body>
+</html>

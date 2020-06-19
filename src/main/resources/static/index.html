@@ -1,0 +1,100 @@
+<html>
+<head>
+    <title>学生作业管理系统登录</title>
+
+    <script src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript">
+        function beforeSure() {
+            var load_id =document.getElementById("load_id").value;
+            var load_pw =document.getElementById("load_pw").value;
+
+            $.ajax({
+                url: "/load/a",
+                type: "POST",
+                data: {
+                    load_id: load_id,
+                    load_pw: load_pw,
+                },
+                cache: false,
+                dataType: "json",
+                success: function (data) {
+                    var code1=data.code;
+                    var msg=data.msg;
+                    if(code1==0){
+                        alert("密码错误或未注册！");
+                    }
+                    else {
+                        alert("登陆成功！");
+                        if(msg=="学生"){
+                            //window.location.href = "studentmain.html";
+                            window.open("studentmain.html");
+                        }
+                        else {
+                            //var getval=document.getElementById("load_id").value;
+                            //turngetval=escape(getval);
+                            //document.location.href="teachermain.html?a="+turngetval;
+                            window.open("teachermain.html");
+                        }
+
+                    }
+
+                    //window.open("index.jsp");
+                },
+                error: function (err) {
+                    alert("error");
+                }
+            });
+
+        }
+
+        function register() {
+            window.location.href = "register.html";
+        }
+    </script>
+
+    <STYLE type="text/css">
+        body{
+            background-repeat: repeat;
+        }
+        body{
+            background-image: url(/timg1.jpg);
+        }
+
+        #form{
+            width:250px;
+            height:160px;
+            position:relative;
+            left:50%;
+            top:50%;
+            margin-left:-150px;
+            margin-top:-80px;
+
+        }
+
+    </STYLE>
+    <style>
+        .div{font-size:19px}
+        /* css注释：设置使用对象选择器名为“.div”的字体大小为14px */
+        .span{font-size:19px}
+    </style>
+
+
+</head>
+<body background="/timg1.jpg">
+
+
+<form id="form" margin="100px" >
+
+    <span class="span">用户名:</span>    <input type="text" id="load_id" name="load_id" value="" align="center" style="width:170px;height:25px" ><br>
+    <br>
+    <span class="span">密码:  </span>    <input type="text" id="load_pw" name="load_pw" align="center" style="width:170px;height:25px"><br>
+    <br>
+    <input type="button" id="submit" value="登录" onclick="beforeSure()" align="center">              <input type="reset" value="重置">              <input type="button" value="注册" onclick="register()">
+    <p align="center"></p>
+</form>
+
+
+</body>
+
+
+</html>

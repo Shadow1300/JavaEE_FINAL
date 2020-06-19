@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>老师主页</title>
+    <script src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript">
+        function load() {
+            var id =window.opener.document.getElementById("load_id").value;
+            //alert("注册成功！");
+            document.getElementById("load_id").value = id;
+        }
+
+    </script>
+
+</head>
+
+<body onload="load();">
+老师欢迎您:    <input type="text" id="load_id" name="load_id" value="" align="center"><br>
+<table border="1">
+    <tr>
+        <td>请选择操作项</td>
+    </tr>
+    <tr>
+        <td><a href="/createclass.html" target="_blank">创建班级</a></td>
+    </tr>
+    <tr>
+        <td><a href="/lookclass.html" target="_blank">查看班级</a></td>
+    </tr>
+    <tr>
+        <td><a href="/makehomework.html" target="_blank">发布作业</a></td>
+    </tr>
+    <tr>
+        <td><a href="/checkhomework.html" target="_blank">审批作业</a></td>
+    </tr>
+    <tr>
+        <td><a href="/lookhomework1.html" target="_blank">查看作业提交情况</a></td>
+    </tr>
+    <tr>
+        <td><a href="/mypublish.html" target="_blank">查看我已发布</a></td>
+    </tr>
+
+    </tr>
+</table>
+</body>
+</html>
